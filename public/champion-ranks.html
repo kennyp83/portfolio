@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="League of Legends champion meta rankings, win rates, and tier lists by role." />
+  <title>Champion Meta | Kenny</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>" />
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo-link">
+        <div class="logo">kenny.</div>
+      </a>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">Home</a>
+        <a href="/projects.html" class="nav-link">Work</a>
+        <a href="/profile.html" class="nav-link">League</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container with-nav-padding">
+    <div class="champions-header">
+      <h1>Champion Meta Rankings</h1>
+      <p>Discover the strongest champions across all roles and ranks</p>
+      
+      <div class="role-selector">
+        <button class="role-btn active" data-role="all">All Roles</button>
+        <button class="role-btn" data-role="top">Top</button>
+        <button class="role-btn" data-role="jungle">Jungle</button>
+        <button class="role-btn" data-role="mid">Mid</button>
+        <button class="role-btn" data-role="adc">ADC</button>
+        <button class="role-btn" data-role="support">Support</button>
+      </div>
+    </div>
+
+    <div class="champions-card card animate-fade-in">
+      <div class="champions-stats">
+        <div class="stat-pill">
+          <span class="stat-number">167</span>
+          <span class="stat-text">Champions</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-number">Live</span>
+          <span class="stat-text">Meta Data</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-number">14.24</span>
+          <span class="stat-text">Patch</span>
+        </div>
+      </div>
+
+      <div class="champions-table">
+        <div class="table-header">
+          <div class="rank-col">Rank</div>
+          <div class="champion-col">Champion</div>
+          <div class="role-col">Role</div>
+          <div class="winrate-col">Win Rate</div>
+          <div class="pickrate-col">Pick Rate</div>
+          <div class="banrate-col">Ban Rate</div>
+        </div>
+        
+        <div class="table-body" id="champions-body">
+          <div class="loading-row">
+            <div class="loading-spinner"></div>
+            <span>Loading champion data...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Performers Section -->
+    <div class="top-performers card animate-fade-in">
+      <h2>🏆 Meta Dominators</h2>
+      <div class="performers-grid">
+        <div class="performer-card">
+          <div class="performer-rank">S+</div>
+          <div class="performer-info">
+            <h4>Highest Win Rate</h4>
+            <p class="performer-name">Loading...</p>
+            <span class="performer-stat">0%</span>
+          </div>
+        </div>
+        
+        <div class="performer-card">
+          <div class="performer-rank">S</div>
+          <div class="performer-info">
+            <h4>Most Picked</h4>
+            <p class="performer-name">Loading...</p>
+            <span class="performer-stat">0%</span>
+          </div>
+        </div>
+        
+        <div class="performer-card">
+          <div class="performer-rank">A</div>
+          <div class="performer-info">
+            <h4>Most Banned</h4>
+            <p class="performer-name">Loading...</p>
+            <span class="performer-stat">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Kenny's Playplace | Built with ❤️ and lots of coffee</p>
+    </div>
+  </div>
+
+  <script>
+    // Expanded mock data with more champions and realistic stats
+    const championData = [
+      // Top Lane
+      { name: 'Aatrox', role: 'top', winRate: 51.2, pickRate: 12.4, banRate: 8.3 },
+      { name: 'Darius', role: 'top', winRate: 50.8, pickRate: 16.4, banRate: 13.7 },
+      { name: 'Garen', role: 'top', winRate: 52.1, pickRate: 14.2, banRate: 6.1 },
+      { name: 'Fiora', role: 'top', winRate: 49.5, pickRate: 11.3, banRate: 9.4 },
+      { name: 'Jax', role: 'top', winRate: 51.8, pickRate: 13.7, banRate: 10.2 },
+      { name: 'Camille', role: 'top', winRate: 50.3, pickRate: 9.8, banRate: 7.5 },
+      { name: 'Sett', role: 'top', winRate: 51.5, pickRate: 10.9, banRate: 11.3 },
+      { name: 'Mordekaiser', role: 'top', winRate: 52.3, pickRate: 13.1, banRate: 14.8 },
+      
+      // Jungle
+      { name: 'Lee Sin', role: 'jungle', winRate: 51.8, pickRate: 18.3, banRate: 12.2 },
+      { name: 'Graves', role: 'jungle', winRate: 52.7, pickRate: 14.5, banRate: 11.8 },
+      { name: 'Kha\'Zix', role: 'jungle', winRate: 51.1, pickRate: 13.2, banRate: 8.9 },
+      { name: 'Elise', role: 'jungle', winRate: 50.4, pickRate: 9.7, banRate: 5.3 },
+      { name: 'Nocturne', role: 'jungle', winRate: 52.9, pickRate: 12.8, banRate: 9.7 },
+      { name: 'Viego', role: 'jungle', winRate: 49.8, pickRate: 16.2, banRate: 15.4 },
+      { name: 'Hecarim', role: 'jungle', winRate: 51.3, pickRate: 11.4, banRate: 7.8 },
+      { name: 'Amumu', role: 'jungle', winRate: 53.1, pickRate: 15.6, banRate: 16.2 },
+      
+      // Mid Lane
+      { name: 'Ahri', role: 'mid', winRate: 53.2, pickRate: 22.1, banRate: 8.5 },
+      { name: 'Katarina', role: 'mid', winRate: 49.8, pickRate: 19.2, banRate: 15.6 },
+      { name: 'Yasuo', role: 'mid', winRate: 47.5, pickRate: 23.6, banRate: 18.9 },
+      { name: 'Zed', role: 'mid', winRate: 48.9, pickRate: 17.8, banRate: 16.3 },
+      { name: 'Syndra', role: 'mid', winRate: 50.7, pickRate: 14.3, banRate: 7.2 },
+      { name: 'Orianna', role: 'mid', winRate: 51.4, pickRate: 12.9, banRate: 5.8 },
+      { name: 'Viktor', role: 'mid', winRate: 52.1, pickRate: 11.7, banRate: 6.4 },
+      { name: 'LeBlanc', role: 'mid', winRate: 49.3, pickRate: 13.4, banRate: 9.7 },
+      
+      // ADC
+      { name: 'Ezreal', role: 'adc', winRate: 50.1, pickRate: 25.4, banRate: 5.1 },
+      { name: 'Jinx', role: 'adc', winRate: 51.3, pickRate: 20.9, banRate: 7.2 },
+      { name: 'Kai\'Sa', role: 'adc', winRate: 49.7, pickRate: 22.3, banRate: 9.8 },
+      { name: 'Jhin', role: 'adc', winRate: 51.8, pickRate: 24.1, banRate: 6.3 },
+      { name: 'Vayne', role: 'adc', winRate: 50.4, pickRate: 18.7, banRate: 11.4 },
+      { name: 'Caitlyn', role: 'adc', winRate: 49.9, pickRate: 19.5, banRate: 5.9 },
+      { name: 'Lucian', role: 'adc', winRate: 48.6, pickRate: 16.2, banRate: 4.7 },
+      { name: 'Ashe', role: 'adc', winRate: 52.4, pickRate: 17.8, banRate: 6.8 },
+      
+      // Support
+      { name: 'Thresh', role: 'support', winRate: 48.9, pickRate: 17.8, banRate: 9.3 },
+      { name: 'Lux', role: 'support', winRate: 49.2, pickRate: 21.7, banRate: 4.3 },
+      { name: 'Nautilus', role: 'support', winRate: 51.7, pickRate: 15.3, banRate: 11.7 },
+      { name: 'Leona', role: 'support', winRate: 52.1, pickRate: 14.8, banRate: 10.2 },
+      { name: 'Lulu', role: 'support', winRate: 50.8, pickRate: 13.9, banRate: 7.5 },
+      { name: 'Blitzcrank', role: 'support', winRate: 51.3, pickRate: 16.2, banRate: 18.4 },
+      { name: 'Soraka', role: 'support', winRate: 52.7, pickRate: 12.4, banRate: 5.9 },
+      { name: 'Senna', role: 'support', winRate: 49.5, pickRate: 14.6, banRate: 6.8 }
+    ];
+
+    function updateTopPerformers(list) {
+      if (!list.length) return;
+      const highestWinRate = list.reduce((a,b)=> a.winRate > b.winRate ? a : b);
+      const mostPicked = list.reduce((a,b)=> a.pickRate > b.pickRate ? a : b);
+      const mostBanned = list.reduce((a,b)=> a.banRate > b.banRate ? a : b);
+      const cards = document.querySelectorAll('.performer-card');
+      if (cards[0]) { cards[0].querySelector('.performer-name').textContent = highestWinRate.name; cards[0].querySelector('.performer-stat').textContent = `${highestWinRate.winRate}%`; }
+      if (cards[1]) { cards[1].querySelector('.performer-name').textContent = mostPicked.name; cards[1].querySelector('.performer-stat').textContent = `${mostPicked.pickRate}%`; }
+      if (cards[2]) { cards[2].querySelector('.performer-name').textContent = mostBanned.name; cards[2].querySelector('.performer-stat').textContent = `${mostBanned.banRate}%`; }
+    }
+
+    function renderChampions(role='all') {
+      const body = document.getElementById('champions-body');
+      if (!body) return;
+      body.innerHTML='';
+      let data = role==='all' ? championData : championData.filter(c=>c.role===role);
+      
+      // Sort by win rate (highest first)
+      data = data.sort((a, b) => b.winRate - a.winRate);
+      
+      // Add staggered fade-in animation
+      data.forEach((champ, i) => {
+        const row = document.createElement('div');
+        row.className='table-row';
+        row.style.opacity = '0';
+        row.style.animation = `fadeInUp 0.5s ease forwards ${i * 0.03}s`;
+        
+        row.innerHTML = `
+          <div class="rank-col"><span class="rank-badge ${i<3?'top-three':''}">#${i+1}</span></div>
+          <div class="champion-col">
+            <div class="champion-info">
+              <img class="champion-icon" src="https://ddragon.leagueoflegends.com/cdn/15.9.1/img/champion/${champ.name.replace(/'/g, '').replace(/ /g, '')}.png" 
+                   alt="${champ.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="champion-icon-placeholder" style="display:none;">${champ.name[0]}</div>
+              <span class="champion-name">${champ.name}</span>
+            </div>
+          </div>
+          <div class="role-col"><span class="role-badge ${champ.role}">${champ.role.toUpperCase()}</span></div>
+          <div class="winrate-col"><span class="winrate-value ${champ.winRate>=52?'high':champ.winRate<=48?'low':''}">${champ.winRate}%</span></div>
+          <div class="pickrate-col"><span class="pickrate-value">${champ.pickRate}%</span></div>
+          <div class="banrate-col"><span class="banrate-value">${champ.banRate}%</span></div>`;
+        body.appendChild(row);
+        
+        // Add click handler for champion details
+        row.addEventListener('click', () => {
+          if (window.KennysPlayplace) {
+            window.KennysPlayplace.confetti(
+              row.getBoundingClientRect().left + row.offsetWidth / 2,
+              row.getBoundingClientRect().top + row.offsetHeight / 2,
+              5
+            );
+          }
+        });
+      });
+      updateTopPerformers(data);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Role button wiring
+      document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          renderChampions(btn.dataset.role);
+        });
+      });
+      renderChampions('all');
+      // Hide profile link until unlocked
+      const link = document.getElementById('nav-profile');
+      if (link) link.style.display = localStorage.getItem('profileReady')==='true' ? '' : 'none';
+    });
+  </script>
+  <script src="/enhancements.js"></script>
+</body>
+</html>

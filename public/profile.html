@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="League of Legends player statistics, match history, and champion mastery tracking." />
+  <title>League Stats | Kenny</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <style>
+    #profile-card, #recent-games-card, #top-champs-card {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo-link">
+        <div class="logo">kenny.</div>
+      </a>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">Home</a>
+        <a href="/projects.html" class="nav-link">Work</a>
+        <a href="/profile.html" class="nav-link active" id="nav-profile">League</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container with-nav-padding">
+    <!-- Hidden inputs for profile.js param handling -->
+    <div style="display:none;visibility:hidden;">
+      <input id="name-input" type="text" />
+      <input id="tag-input" type="text" />
+      <select id="region-select">
+        <option value="na1">na1</option>
+        <option value="euw1">euw1</option>
+        <option value="eun1">eun1</option>
+        <option value="kr">kr</option>
+        <option value="jp1">jp1</option>
+        <option value="br1">br1</option>
+        <option value="la1">la1</option>
+        <option value="la2">la2</option>
+        <option value="tr1">tr1</option>
+        <option value="ru">ru</option>
+      </select>
+    </div>
+  <!-- Loading State -->
+  <div id="loading-spinner" class="loading-container hidden">
+      <div class="loading-spinner"></div>
+      <h2>Analyzing Summoner Data...</h2>
+      <p>Gathering match history and statistics</p>
+    </div>
+
+    <!-- Profile Header -->
+  <div class="profile-header-section card animate-fade-in" id="profile-card">
+      <div class="profile-avatar">
+    <img id="summoner-icon" src="" alt="Profile Icon" />
+        <div class="profile-level">
+          <span id="summoner-level">0</span>
+        </div>
+      </div>
+      <div class="profile-info">
+        <h1 id="summoner-name">Summoner Name</h1>
+    <div id="summoner-meta" class="profile-meta"></div>
+      </div>
+      <div class="profile-rank">
+        <div class="rank-emblem">
+          <img id="rank-icon" src="" alt="Rank" />
+        </div>
+        <div class="rank-info">
+          <h3 id="rank-tier">Unranked</h3>
+          <p id="rank-lp">0 LP</p>
+          <div class="win-rate">
+            <span id="wins">0W</span>
+            <span id="losses">0L</span>
+            <span id="win-rate">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="profile-grid">
+      <!-- Recent Matches -->
+      <div class="matches-section card animate-fade-in" id="recent-games-card">
+        <div class="section-header">
+          <h2>Recent Matches</h2>
+          <div style="margin-left:auto;">
+            <select id="queue-filter">
+              <option value="all">All Queues</option>
+              <option value="ranked">Ranked</option>
+              <option value="normal">Normal</option>
+              <option value="aram">ARAM</option>
+            </select>
+          </div>
+          <div class="match-stats">
+            <span class="recent-wins">0W</span>
+            <span class="recent-losses">0L</span>
+            <span class="recent-winrate">0%</span>
+          </div>
+        </div>
+        <div class="matches-list" id="matches-content">
+          <!-- Matches will be populated here -->
+        </div>
+        <button id="load-more" class="btn" style="display:none;margin-top:12px;">Load more</button>
+        <div class="performance-stats" style="margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap;">
+          <div class="perf-item"><span class="muted">Avg KDA:</span> <strong id="avg-kda">-</strong></div>
+          <div class="perf-item"><span class="muted">Win Rate:</span> <strong id="win-rate">-</strong></div>
+          <div class="perf-item"><span class="muted">CS/min:</span> <strong id="avg-cs">-</strong></div>
+          <div class="perf-item" id="role-stats" style="display:flex;gap:0.75rem;"></div>
+        </div>
+      </div>
+
+      <!-- Champion Mastery -->
+      <div class="champions-section card animate-fade-in" id="top-champs-card">
+        <div class="section-header">
+          <h2>Champion Mastery</h2>
+          <p>Top performing champions</p>
+        </div>
+        <div class="champions-grid" id="champions-grid">
+          <!-- Champions will be populated here -->
+        </div>
+      </div>
+    </div>
+    <div id="season-stats" class="card" style="display:none"></div>
+
+    <!-- Error State -->
+    <div id="error-state" class="error-container card" style="display: none;">
+      <div class="error-icon">❌</div>
+      <h2>Summoner Not Found</h2>
+      <p>We couldn't find the summoner you're looking for. Please check the name and try again.</p>
+      <a href="/index.html" class="btn">Search Again</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Kenny's Playplace | Built with ❤️ and lots of coffee</p>
+    </div>
+  </div>
+
+  <script src="/profile.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const link = document.getElementById('nav-profile');
+      if (link) {
+        if (localStorage.getItem('profileReady') === 'true') link.style.display=''; else link.style.display='none';
+      }
+      const params = new URLSearchParams(window.location.search);
+      const hasProfileParams = params.get('name') && params.get('tag');
+      if (hasProfileParams) {
+        // Immediately reveal cards so refresh does not leave them hidden
+        ['profile-card','recent-games-card','top-champs-card'].forEach(id => {
+          const el = document.getElementById(id); if (el) el.style.display = 'block';
+        });
+        // Show spinner until profile.js finishes loading data
+        const spinner = document.getElementById('loading-spinner');
+        if (spinner) spinner.classList.remove('hidden');
+        // Hide error state if previously shown
+        const err = document.getElementById('error-state'); if (err) err.style.display='none';
+      }
+    });
+  </script>
+  <script src="/enhancements.js"></script>
+</body>
+</html>
