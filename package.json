@@ -1,5 +1,5 @@
 {
-  "name": "league-match-tracker",
+  "name": "portfolio-website",
   "version": "1.0.0",
   "description": "Personal portfolio with League of Legends stats tracker using Riot Games API",
   "main": "server.js",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/league-match-tracker.git"
+    "url": "https://github.com/yourusername/portfolio-website.git"
   },
   "scripts": {
     "start": "node server.js",

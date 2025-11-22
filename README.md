@@ -27,8 +27,8 @@ A modern personal portfolio showcasing coding projects and League of Legends sta
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/league-match-tracker.git
-cd league-match-tracker
+git clone https://github.com/yourusername/portfolio-website.git
+cd portfolio-website
 ```
 
 2. **Install dependencies:**
@@ -73,7 +73,7 @@ const MY_ACCOUNT = {
 ## 📁 Project Structure
 
 ```
-league-match-tracker/
+portfolio-website/
 ├── public/
 │   ├── index.html          # Homepage/landing page
 │   ├── projects.html       # Projects showcase
