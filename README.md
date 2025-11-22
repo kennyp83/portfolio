@@ -223,12 +223,3 @@ SOFTWARE.
 - **Data Dragon** for champion assets and icons
 - **Community Feedback** for design improvements and feature suggestions
 
-## 📧 Contact
-
-- **Portfolio**: [Your Portfolio URL]
-- **GitHub**: [@yourusername](https://github.com/yourusername)
-- **Email**: your.email@example.com
-
----
-
-**Built with ❤️ and lots of coffee** ☕
